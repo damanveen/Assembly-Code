@@ -1,0 +1,84 @@
+					DisplayPort .EQU 04E9h 
+					
+					
+					.ORG 0010h
+						
+						
+					AppNums:
+0010	55			.DB 85
+0011	1C			.DB 28
+0012	08			.DB 8
+0013	5B			.DB 91
+0014	02			.DB 2
+0015	35			.DB 53
+0016	3D			.DB 61
+						
+0017	35		MyNum: .DB 53	
+0018	FF		sentVar: .DB 0FFh
+0019	30		counter: .DB 30h
+					
+					
+					.ORG 0100h
+					
+					
+					
+					SadMsg: 
+0100	4461726E..			.DB 'Darn. You are grounded!!$'
+						
+					FoundItMsg: 
+0119	426F6F79..			.DB 'Booyah!! Im going to Mars! I found my application number at position: $'
+						
+					.ORG 0200h	
+					
+					Main: 
+0200	BAE904			mov DX, DisplayPort
+0203	BE1000			mov SI, AppNums
+0206	8A061700			mov AL, [MyNum]
+020A	8A0E1900			mov CL, [counter]
+						
+					MainLoop:
+						
+						
+020E	FEC1			inc CL
+0210	3A04			cmp AL, [SI]
+0212	7410			JE foundIt
+						
+0214	81FE1800			cmp SI, sentVar
+0218	7404			JE Nope
+						
+021A	46			inc SI
+021B	E9F0FF			jmp MainLoop
+					
+					Nope: 
+					
+021E	BB0001		MOV BX, SadMsg
+0221	E90600		jmp prtChar
+					
+					foundIt:
+					
+0224	BB1901		MOV BX,FoundItMsg
+0227	E90000		jmp prtChar
+					
+					
+					prtChar:
+						
+							
+022A	8A07			mov AL, [BX]
+022C	3C24			cmp AL, '$'
+022E	7405			JE number
+0230	EE			out DX,AL
+0231	43			inc BX
+						
+						
+						
+0232	E9F5FF			jmp prtChar
+						
+					
+						
+					number: 
+						
+0235	88C8			mov AL, CL
+0237	EE			out DX, AL
+						
+					quit:
+0238	F4			HLT 

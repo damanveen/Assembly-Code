@@ -1,0 +1,37 @@
+3 36 512 163   
+0010155AppNums8520
+001111C2820
+0012108820
+001315B9120
+0014102220
+00151355320
+001613D6120
+0017135MyNum5320
+00181FFsentVar00FFH20
+0019130counter30H20
+0100254461726E2E20596F75206172652067726F756E646564212124SadMsg'Darn. You are grounded!!$'20
+011971426F6F796168212120496D20676F696E6720746F204D61727321204920666F756E64206D79206170706C69636174696F6E206E756D62657220617420706F736974696F6E3A2024FoundItMsg'Booyah!! Im going to Mars! I found my application number at position: $'20
+02003BAE904Mainmov DX, 04E9H20
+02033BE1000mov SI, AppNums20
+020648A061700mov AL, [MyNum]20
+020A48A0E1900mov CL, [counter]20
+020E2FEC1MainLoopinc CL20
+021023A04cmp AL, [SI]20
+021227410je foundIt20
+0214481FE1800cmp SI, sentVar20
+021827404je Nope20
+021A146inc SI20
+021B3E9F0FFjmp MainLoop20
+021E3BB0001Nopemov BX, SadMsg20
+02213E90600jmp prtChar20
+02243BB1901foundItmov BX, FoundItMsg20
+02273E90000jmp prtChar20
+022A28A07prtCharmov AL, [BX]20
+022C23C24cmp AL, '$'20
+022E27405je number20
+02301EEout DX, AL20
+0231143inc BX20
+02323E9F5FFjmp prtChar20
+0235288C8numbermov AL, CL20
+02371EEout DX, AL20
+02381F4quithlt20

@@ -1,0 +1,13 @@
+3 12 0 19    
+00003BAE904startmov DX, 04E9H20
+00032B044mov AL, 'D'20
+00051EEout DX, AL20
+00062B041mov AL, 'A'20
+00081EEout DX, AL20
+00092B04Dmov AL, 'M'20
+000B1EEout DX, AL20
+000C2B041mov AL, 'A'20
+000E1EEout DX, AL20
+000F2B04Emov AL, 'N'20
+00111EEout DX, AL20
+00121F4hlt20
